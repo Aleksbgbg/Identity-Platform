@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AppUser>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="text-center">Id</th>
+            <th scope="col" class="text-center">Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (AppUser user in Model)
+            {
+                <tr>
+                    <td class="text-center">@user.Id</td>
+                    <td class="text-center">@user.UserName</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center">No Accounts Present</td>
+            </tr>
+        }
+    </tbody>
+</table>
