@@ -1,13 +1,32 @@
 ﻿namespace Identity.Platform
 {
+    using Identity.Platform.Models;
+    using Identity.Platform.Models.Database;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     internal class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseNpgsql(_configuration["Data:Identity:ConnectionString"]));
+
+            services.AddIdentity<AppUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppIdentityDbContext>()
+                    .AddDefaultTokenProviders();
+
             services.AddMvc();
         }
 
@@ -19,6 +38,7 @@
                 app.UseStatusCodePages();
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseMvc(routes =>
                        {
