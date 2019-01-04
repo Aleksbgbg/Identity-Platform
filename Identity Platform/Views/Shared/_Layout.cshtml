@@ -3,6 +3,8 @@
 <head>
     <title>Identity Platform</title>
 
+    <link rel="icon" type="img/ico" href="img/Shield.png" />
+
     <environment names="Staging, Production">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     </environment>
@@ -11,7 +13,11 @@
     </environment>
 </head>
 <body>
-    @RenderBody()
+    <header>
+        @await Component.InvokeAsync("NavBar")
+    </header>
+
+    <main>@RenderBody()</main>
 
     <environment names="Staging, Production">
         <script src="~/lib/jquery/dist/jquery.slim.min.js"></script>
