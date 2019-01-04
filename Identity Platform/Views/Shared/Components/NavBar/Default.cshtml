@@ -1,0 +1,23 @@
+﻿@model IEnumerable<NavLocation>
+
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <img src="~/img/Shield.png" width="30" height="30" class="d-inline-block align-top" alt="logo" /> Identity Platform
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            @foreach (NavLocation navLocation in Model)
+            {
+                <li class="@(navLocation.IsActive ? "nav-item active" : "nav-item")">
+                    <a class="nav-link" asp-controller="@navLocation.Location.Controller" asp-action="@navLocation.Location.Action">@navLocation.Location.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
