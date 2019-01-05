@@ -19,5 +19,12 @@
                 </li>
             }
         </ul>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form class="form-inline" method="post" asp-controller="Authorization" asp-action="Logout">
+                <button class="btn btn-outline-light" type="submit">Sign out</button>
+            </form>
+        }
     </div>
 </nav>
