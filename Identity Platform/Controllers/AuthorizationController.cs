@@ -66,7 +66,18 @@
 
             ModelState.AddModelError(nameof(login.Password), "Incorrect password.");
             return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                await _signInManager.SignOutAsync();
+            }
+
+            return Redirect("/");
         }
     }
 }
