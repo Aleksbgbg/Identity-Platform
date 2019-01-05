@@ -9,6 +9,10 @@
     {
       "library": "bootstrap@4.2.1",
       "destination": "wwwroot/lib/bootstrap"
+    },
+    {
+      "library": "popper.js@1.14.2",
+      "destination": "wwwroot/lib/popperjs"
     }
   ]
 }
