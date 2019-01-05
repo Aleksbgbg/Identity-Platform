@@ -1,6 +1,8 @@
 ﻿@model Login
 
 <form method="post" asp-controller="Authorization" asp-action="Login">
+    <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>
+
     <div class="form-group">
         <label asp-for="Username"></label>
         <input class="form-control" asp-for="Username" placeholder="Username"/>
