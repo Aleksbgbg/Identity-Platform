@@ -13,8 +13,8 @@
         private static readonly Location[] Locations =
         {
             new Location("Home", "Index"),
-            new Location("User", "Index", "Regular Users Homepage"),
-            new Location("Admin", "Index", "Admin Users Homepage")
+            new Location("Users", "Index", "Regular Users Homepage"),
+            new Location("Admins", "Index", "Admin Users Homepage")
         };
 
         public IViewComponentResult Invoke()
