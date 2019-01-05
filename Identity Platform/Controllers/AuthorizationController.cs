@@ -47,7 +47,7 @@
 
             if (targetUser == null)
             {
-                ModelState.AddModelError(nameof(login.Username), "Invalid username");
+                ModelState.AddModelError(nameof(login.Username), "Username does not exist.");
                 return View("SignInForm");
             }
 
@@ -64,7 +64,7 @@
                 return Redirect(returnUrl ?? "/");
             }
 
-            ModelState.AddModelError(nameof(login.Password), "Invalid password");
+            ModelState.AddModelError(nameof(login.Password), "Incorrect password.");
             return View("SignInForm");
 
         }
