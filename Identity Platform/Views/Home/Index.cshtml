@@ -1,28 +1,35 @@
 ﻿@model System.Security.Principal.IIdentity
 
-<div class="jumbotron">
-    @if (Model.IsAuthenticated)
-    {
-        <h1 class="display-4">Welcome, @Model.Name!</h1>
-        <p class="lead">You are currently logged into our Identity Platform. Check your details below!</p>
-    }
-    else
-    {
-        <h1 class="display-4">Welcome, guest user!</h1>
-        <p class="lead">You are currently not logged into our Identity Platform, and as such cannot access any content.</p>
-        <hr class="my-4" />
-        <p>Would you like to sign in?</p>
+<div class="mt-3">
+    <div class="jumbotron">
+        @if (Model.IsAuthenticated)
+        {
+            <h1 class="display-4">Welcome, @Model.Name!</h1>
+            <p class="lead">You are currently logged into our Identity Platform. Check your details below!</p>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome, guest user!</h1>
+            <p class="lead">You are currently not logged into our Identity Platform, and as such cannot access any content.</p>
+            <hr class="my-4"/>
+            <p>Would you like to sign in?</p>
 
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Sign in
-            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Sign in
+                </button>
 
-            <div class="dropdown-menu">
-                <div class="px-4 py-3">
-                    <partial name="SignInForm" model="null"/>
+                <div class="dropdown-menu">
+                    <div class="px-4 py-3">
+                        <partial name="SignInForm" model="null"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+    </div>
+
+    @if (Model.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("UserPropertyTable")
     }
 </div>
