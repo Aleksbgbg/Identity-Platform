@@ -31,7 +31,7 @@
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View("SignInForm");
+            return View();
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return View("SignInForm");
+                return View();
             }
 
             AppUser targetUser = await _userManager.FindByNameAsync(login.Username);
@@ -48,7 +48,7 @@
             if (targetUser == null)
             {
                 ModelState.AddModelError(nameof(login.Username), "Username does not exist.");
-                return View("SignInForm");
+                return View();
             }
 
             SignInResult signInResult = await _signInManager.PasswordSignInAsync
@@ -65,7 +65,7 @@
             }
 
             ModelState.AddModelError(nameof(login.Password), "Incorrect password.");
-            return View("SignInForm");
+            return View();
 
         }
     }
