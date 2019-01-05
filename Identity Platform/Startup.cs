@@ -1,5 +1,6 @@
 ﻿namespace Identity.Platform
 {
+    using Identity.Platform.Controllers;
     using Identity.Platform.Models;
     using Identity.Platform.Models.Database;
 
@@ -26,6 +27,8 @@
             services.AddIdentity<AppUser, IdentityRole>()
                     .AddEntityFrameworkStores<AppIdentityDbContext>()
                     .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = $"/Authorization/{nameof(AuthorizationController.Login)}");
 
             services.AddMvc();
         }
