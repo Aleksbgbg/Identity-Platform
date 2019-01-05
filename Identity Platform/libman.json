@@ -7,6 +7,14 @@
       "destination": "wwwroot/lib/jquery"
     },
     {
+      "library": "jquery-validation@1.19.0",
+      "destination": "wwwroot/lib/jquery-validation"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive"
+    },
+    {
       "library": "bootstrap@4.2.1",
       "destination": "wwwroot/lib/bootstrap"
     },
