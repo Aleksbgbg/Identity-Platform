@@ -30,6 +30,13 @@
 
             services.ConfigureApplicationCookie(options => options.LoginPath = $"/Authorization/{nameof(AuthorizationController.Login)}");
 
+            services.AddAuthentication()
+                    .AddGoogle(options =>
+                    {
+                        options.ClientId = _configuration["Secrets:GoogleApi:ClientId"];
+                        options.ClientSecret = _configuration["Secrets:GoogleApi:ClientSecret"];
+                    });
+
             services.AddMvc();
         }
 
@@ -44,10 +51,10 @@
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseMvc(routes =>
-                       {
-                           routes.MapRoute(name: null,
-                                           template: "{Controller=Home}/{Action=Index}");
-                       });
+            {
+                routes.MapRoute(name: null,
+                                template: "{Controller=Home}/{Action=Index}");
+            });
         }
     }
 }
