@@ -27,7 +27,6 @@
         public IActionResult GoogleLogin(string returnUrl)
         {
             string redirectUrl = Url.Action("GoogleResponse",
-                                            "Authorization",
                                             new
                                             {
                                                 ReturnUrl = returnUrl
