@@ -24,7 +24,7 @@
         {
             services.AddDbContext<AppIdentityDbContext>(options => options.UseNpgsql(_configuration["Data:Identity:ConnectionString"]));
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>(options => options.User.AllowedUserNameCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-._@/ ")
                     .AddEntityFrameworkStores<AppIdentityDbContext>()
                     .AddDefaultTokenProviders();
 
