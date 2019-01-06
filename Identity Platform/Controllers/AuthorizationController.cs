@@ -1,5 +1,6 @@
 ﻿namespace Identity.Platform.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Identity.Platform.Models;
@@ -21,6 +22,60 @@
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        public IActionResult GoogleLogin(string returnUrl)
+        {
+            string redirectUrl = Url.Action("GoogleResponse",
+                                            "Authorization",
+                                            new
+                                            {
+                                                ReturnUrl = returnUrl
+                                            });
+
+            return new ChallengeResult("Google",
+                                       _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl));
+        }
+
+        public async Task<IActionResult> GoogleResponse(string returnUrl = "/")
+        {
+            ExternalLoginInfo externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
+
+            if (externalLoginInfo == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            SignInResult signInResult = await _signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, false);
+
+            if (signInResult.Succeeded)
+            {
+                return Redirect(returnUrl);
+            }
+
+            AppUser appUser = new AppUser
+            {
+                Email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email),
+                UserName = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Name)
+            };
+
+            IdentityResult userCreationResult = await _userManager.CreateAsync(appUser);
+
+            if (!userCreationResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            IdentityResult addLoginResult = await _userManager.AddLoginAsync(appUser, externalLoginInfo);
+
+            if (!addLoginResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            await _signInManager.SignInAsync(appUser, false);
+            return Redirect(returnUrl);
+
         }
 
         public IActionResult Login(string returnUrl = "/")
