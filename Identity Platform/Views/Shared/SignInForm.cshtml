@@ -21,5 +21,13 @@
 
     <div class="dropdown-divider"></div>
 
+    <a class="btn btn-info btn-block"
+       asp-controller="Authorization" asp-action="GoogleLogin"
+       asp-route-returnUrl="@ViewBag.ReturnUrl">
+        Sign in via Google
+    </a>
+
+    <div class="dropdown-divider"></div>
+
     <a class="dropdown-item" asp-controller="Authorization" asp-action="SignUp">New around here? Sign up!</a>
 </form>
