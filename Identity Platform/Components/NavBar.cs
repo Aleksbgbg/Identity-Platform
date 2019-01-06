@@ -7,6 +7,7 @@
     using Identity.Platform.Models.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewComponents;
 
     public class NavBar : ViewComponent
     {
@@ -17,7 +18,7 @@
             new Location("Admins", "Index", "Admin Users Homepage")
         };
 
-        public IViewComponentResult Invoke()
+        public ViewViewComponentResult Invoke()
         {
             string activeController = ViewContext.RouteData.Values["Controller"].ToString();
             string activeAction = ViewContext.RouteData.Values["Action"].ToString();

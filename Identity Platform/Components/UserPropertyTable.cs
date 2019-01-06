@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewComponents;
 
     public class UserPropertyTable : ViewComponent
     {
@@ -16,7 +17,7 @@
             _userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<ViewViewComponentResult> InvokeAsync()
         {
             return View(await _userManager.GetUserAsync(HttpContext.User));
         }
