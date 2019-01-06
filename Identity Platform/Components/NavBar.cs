@@ -11,19 +11,19 @@
 
     public class NavBar : ViewComponent
     {
-        private static readonly Location[] Locations =
+        private static readonly Location[] DefaultLocations =
         {
             new Location("Home", "Index"),
             new Location("Users", "Index", "Regular Users Homepage"),
             new Location("Admins", "Index", "Admin Users Homepage")
         };
 
-        public ViewViewComponentResult Invoke()
+        public ViewViewComponentResult Invoke(Location[] locations)
         {
             string activeController = ViewContext.RouteData.Values["Controller"].ToString();
             string activeAction = ViewContext.RouteData.Values["Action"].ToString();
 
-            IEnumerable<NavLocation> navLocations = Locations.Select(location => new NavLocation(activeController == location.Controller && activeAction == location.Action, location));
+            IEnumerable<NavLocation> navLocations = (locations ?? DefaultLocations).Select(location => new NavLocation(activeController == location.Controller && activeAction == location.Action, location));
 
             return View(navLocations);
         }
