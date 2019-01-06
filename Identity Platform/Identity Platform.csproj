@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Identity.Platform</RootNamespace>
     <LangVersion>latest</LangVersion>
+    <UserSecretsId>afdd8fcb-c0dc-46ba-8c3c-4c916ab6f872</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
