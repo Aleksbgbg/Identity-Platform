@@ -3,6 +3,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Identity.Platform.Extensions;
     using Identity.Platform.Models;
 
     using Microsoft.AspNetCore.Authorization;
@@ -126,6 +127,45 @@
             }
 
             ModelState.AddModelError(nameof(login.Password), "Incorrect password.");
+            return View();
+        }
+
+        public ViewResult SignUp(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignUp(SignUpCredentials signUpCredentials, string returnUrl = "/")
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser newUser = new AppUser
+                {
+                    UserName = signUpCredentials.Username
+                };
+
+                IdentityResult createResult = await _userManager.CreateAsync(newUser, signUpCredentials.Password);
+
+                if (createResult.Succeeded)
+                {
+                    IdentityResult addToRoleResult = await _userManager.AddToRoleAsync(newUser, "User");
+
+                    if (addToRoleResult.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(newUser, false);
+                        return Redirect(returnUrl);
+                    }
+
+                    ModelState.AddIdentityErrors(addToRoleResult);
+                }
+
+                ModelState.AddIdentityErrors(createResult);
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
