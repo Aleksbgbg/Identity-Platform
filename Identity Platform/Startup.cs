@@ -3,6 +3,7 @@
     using Identity.Platform.Controllers;
     using Identity.Platform.Models;
     using Identity.Platform.Models.Database;
+    using Identity.Platform.Models.Repositories;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,8 @@
                         options.ClientId = _configuration["Secrets:GoogleApi:ClientId"];
                         options.ClientSecret = _configuration["Secrets:GoogleApi:ClientSecret"];
                     });
+
+            services.AddTransient<IUserInfoRepository, UserInfoRepository>();
 
             services.AddMvc();
         }
