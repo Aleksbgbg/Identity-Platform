@@ -3,6 +3,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Identity.Platform.Attributes.Filters;
     using Identity.Platform.Extensions;
     using Identity.Platform.Models;
 
@@ -27,7 +28,7 @@
 
         public IActionResult GoogleLogin(string returnUrl)
         {
-            string redirectUrl = Url.Action("GoogleResponse",
+            string redirectUrl = Url.Action(nameof(GoogleResponse),
                                             new
                                             {
                                                 ReturnUrl = returnUrl
@@ -37,7 +38,7 @@
                                        _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl));
         }
 
-        public async Task<IActionResult> GoogleResponse(string returnUrl = "/")
+        public async Task<IActionResult> GoogleResponse(string returnUrl)
         {
             ExternalLoginInfo externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
 
@@ -85,7 +86,7 @@
 
         }
 
-        public IActionResult Login(string returnUrl = "/")
+        public IActionResult Login(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -98,6 +99,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [TypeFilter(typeof(EnsureReturnUrlExistsFilter))]
         public async Task<IActionResult> Login(Login login, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -138,7 +140,8 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignUp(SignUpCredentials signUpCredentials, string returnUrl = "/")
+        [TypeFilter(typeof(EnsureReturnUrlExistsFilter))]
+        public async Task<IActionResult> SignUp(SignUpCredentials signUpCredentials, string returnUrl)
         {
             if (ModelState.IsValid)
             {
