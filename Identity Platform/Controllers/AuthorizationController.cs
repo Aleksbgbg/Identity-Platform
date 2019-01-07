@@ -72,6 +72,13 @@
                 return Forbid();
             }
 
+            IdentityResult addToUserRoleResult = await _userManager.AddToRoleAsync(appUser, "User");
+
+            if (!addToUserRoleResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             await _signInManager.SignInAsync(appUser, false);
             return Redirect(returnUrl);
 
