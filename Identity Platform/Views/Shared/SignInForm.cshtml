@@ -29,5 +29,8 @@
 
     <div class="dropdown-divider"></div>
 
-    <a class="dropdown-item" asp-controller="Authorization" asp-action="SignUp">New around here? Sign up!</a>
+    <a class="dropdown-item" asp-controller="Authorization"
+       asp-action="SignUp" asp-route-returnUrl="@ViewBag.ReturnUrl">
+        New around here? Sign up!
+    </a>
 </form>
