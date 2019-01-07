@@ -1,1 +1,3 @@
-﻿<h1>Welcome, user!</h1>
+﻿@model IEnumerable<UserInfo>
+
+<propertytable is-collection="true" for="@Model"/>
