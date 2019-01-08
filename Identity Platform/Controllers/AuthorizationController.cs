@@ -132,8 +132,13 @@
             return View();
         }
 
-        public ViewResult SignUp(string returnUrl)
+        public IActionResult SignUp(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/");
+            }
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
