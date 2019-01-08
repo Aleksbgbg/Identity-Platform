@@ -86,13 +86,9 @@
 
         }
 
-        public IActionResult Login(string returnUrl)
+        [EnsureAnonymous]
+        public ViewResult Login(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return Redirect("/");
-            }
-
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -132,13 +128,9 @@
             return View();
         }
 
-        public IActionResult SignUp(string returnUrl)
+        [EnsureAnonymous]
+        public ViewResult SignUp(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return Redirect("/");
-            }
-
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
