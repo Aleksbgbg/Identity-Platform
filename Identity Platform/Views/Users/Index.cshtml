@@ -1,3 +1,9 @@
 ﻿@model IEnumerable<UserInfo>
 
-<propertytable is-collection="true" for="@Model"/>
+<div class="card my-3">
+    <div class="card-body">
+        <h3 class="card-title text-center">See all of our users below!</h3>
+
+        <propertytable is-collection="true" for="@Model"/>
+    </div>
+</div>
