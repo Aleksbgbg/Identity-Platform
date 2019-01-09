@@ -38,6 +38,7 @@
                                        _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl));
         }
 
+        [TypeFilter(typeof(EnsureReturnUrlExistsFilter))]
         public async Task<IActionResult> GoogleResponse(string returnUrl)
         {
             ExternalLoginInfo externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
