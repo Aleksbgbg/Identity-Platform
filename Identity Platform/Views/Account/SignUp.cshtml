@@ -11,25 +11,31 @@
 
             <div class="form-group">
                 <label asp-for="Username"></label>
-                <input class="form-control" asp-for="Username" placeholder="Username"/>
+                <input class="form-control" asp-for="Username" placeholder="Choose a username"/>
                 <div><span asp-validation-for="Username" class="text-danger"></span></div>
             </div>
 
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input class="form-control" asp-for="Email" placeholder="Email"/>
+                <input class="form-control" asp-for="Email" placeholder="Enter your email (optional)"/>
                 <div><span asp-validation-for="Email" class="text-danger"></span></div>
             </div>
 
             <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input class="form-control" asp-for="PhoneNumber" placeholder="Enter your phone number (optional)"/>
+                <div><span asp-validation-for="PhoneNumber" class="text-danger"></span></div>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Password"></label>
-                <input class="form-control" asp-for="Password" placeholder="Password"/>
+                <input class="form-control" asp-for="Password" placeholder="Choose a password"/>
                 <div><span asp-validation-for="Password" class="text-danger"></span></div>
             </div>
 
             <div class="form-group">
                 <label asp-for="RepeatPassword"></label>
-                <input class="form-control" asp-for="RepeatPassword" placeholder="Repeat password"/>
+                <input class="form-control" asp-for="RepeatPassword" placeholder="Confirm your password"/>
                 <div><span asp-validation-for="RepeatPassword" class="text-danger"></span></div>
             </div>
 

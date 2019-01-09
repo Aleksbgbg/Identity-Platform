@@ -14,21 +14,28 @@
 
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input class="form-control" asp-for="Email" placeholder="Enter your email"/>
+                <input class="form-control" asp-for="Email" placeholder="Enter your email (optional)"/>
 
                 <div><span class="text-danger" asp-validation-for="Email"></span></div>
             </div>
 
             <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input class="form-control" asp-for="PhoneNumber" placeholder="Enter your phone number (optional)"/>
+
+                <div><span class="text-danger" asp-validation-for="PhoneNumber"></span></div>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Password"></label>
-                <input class="form-control" asp-for="Password" placeholder="Enter your password"/>
+                <input class="form-control" asp-for="Password" placeholder="Enter your password (or pick a new one)"/>
 
                 <div><span class="text-danger" asp-validation-for="Password"></span></div>
             </div>
 
             <div class="form-group">
                 <label asp-for="RepeatPassword"></label>
-                <input class="form-control" asp-for="RepeatPassword" placeholder="Enter the above password again"/>
+                <input class="form-control" asp-for="RepeatPassword" placeholder="Confirm your password"/>
 
                 <div><span class="text-danger" asp-validation-for="RepeatPassword"></span></div>
             </div>
