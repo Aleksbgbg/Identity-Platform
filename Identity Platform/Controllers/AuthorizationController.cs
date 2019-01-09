@@ -139,16 +139,16 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [TypeFilter(typeof(EnsureReturnUrlExistsFilter))]
-        public async Task<IActionResult> SignUp(SignUpCredentials signUpCredentials, string returnUrl)
+        public async Task<IActionResult> SignUp(UserCredentials userCredentials, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 AppUser newUser = new AppUser
                 {
-                    UserName = signUpCredentials.Username
+                    UserName = userCredentials.Username
                 };
 
-                IdentityResult createResult = await _userManager.CreateAsync(newUser, signUpCredentials.Password);
+                IdentityResult createResult = await _userManager.CreateAsync(newUser, userCredentials.Password);
 
                 if (createResult.Succeeded)
                 {

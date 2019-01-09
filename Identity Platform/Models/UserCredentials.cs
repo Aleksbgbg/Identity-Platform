@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class SignUpCredentials
+    public class UserCredentials
     {
         [Required]
         public string Username { get; set; }
