@@ -53,13 +53,6 @@
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: null,
-                                template: "Account/{Action}/{UserId}",
-                                defaults: new
-                                {
-                                    Controller = "Account"
-                                });
-
-                routes.MapRoute(name: null,
                                 template: "{Controller=Home}/{Action=Index}");
             });
         }
