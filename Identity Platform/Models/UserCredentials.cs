@@ -10,6 +10,9 @@
         [UIHint("Email")]
         public string Email { get; set; }
 
+        [UIHint("PhoneNumber")]
+        public string PhoneNumber { get; set; }
+
         [Required]
         [UIHint("Password")]
         public string Password { get; set; }
