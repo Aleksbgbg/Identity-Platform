@@ -26,6 +26,11 @@
             _signInManager = signInManager;
         }
 
+        public ViewResult AccessDenied()
+        {
+            return View();
+        }
+
         public ChallengeResult GoogleLogin(string returnUrl)
         {
             string redirectUrl = Url.Action(nameof(GoogleResponse),
