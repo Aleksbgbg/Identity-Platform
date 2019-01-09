@@ -182,5 +182,60 @@
 
             return Redirect("/");
         }
+
+        [Authorize]
+        public async Task<IActionResult> Edit()
+        {
+            AppUser targetUser = await _userManager.GetUserAsync(User);
+
+            return View(new UserCredentials
+            {
+                Username = targetUser.UserName
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserCredentials userCredentials)
+        {
+            AppUser targetUser = await _userManager.GetUserAsync(User);
+
+            userCredentials.Username = targetUser.UserName;
+
+            if (ModelState.IsValid)
+            {
+                targetUser.Email = userCredentials.Email;
+
+                IdentityResult updateResult = await _userManager.UpdateAsync(targetUser);
+
+                if (updateResult.Succeeded)
+                {
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+
+                ModelState.AddIdentityErrors(updateResult);
+            }
+
+            return View(userCredentials);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete()
+        {
+            AppUser targetUser = await _userManager.GetUserAsync(User);
+
+            IdentityResult deleteResult = await _userManager.DeleteAsync(targetUser);
+
+            if (!deleteResult.Succeeded)
+            {
+                // TODO: Redirect to error page?
+                ModelState.AddIdentityErrors(deleteResult);
+            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
     }
 }

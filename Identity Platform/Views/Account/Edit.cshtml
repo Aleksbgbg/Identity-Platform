@@ -1,0 +1,39 @@
+﻿@model UserCredentials
+
+<div class="row justify-content-center">
+    <div class="card col-sm-4 text-center my-4 py-4">
+        <h5 class="card-title">@Model.Username, change you are selve!</h5>
+
+        <form method="post" asp-action="Edit">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input class="form-control" asp-for="Username" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input class="form-control" asp-for="Email" placeholder="Enter your email"/>
+
+                <div><span class="text-danger" asp-validation-for="Email"></span></div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input class="form-control" asp-for="Password" placeholder="Enter your password"/>
+
+                <div><span class="text-danger" asp-validation-for="Password"></span></div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RepeatPassword"></label>
+                <input class="form-control" asp-for="RepeatPassword" placeholder="Enter the above password again"/>
+
+                <div><span class="text-danger" asp-validation-for="RepeatPassword"></span></div>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Save Changes"/>
+        </form>
+    </div>
+</div>
