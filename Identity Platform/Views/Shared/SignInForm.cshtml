@@ -1,6 +1,6 @@
 ﻿@model Login
 
-<form method="post" asp-controller="Account" asp-action="Login">
+<form method="post" asp-controller="Account" asp-action="SignIn">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>

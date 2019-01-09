@@ -45,7 +45,7 @@
 
             if (externalLoginInfo == null)
             {
-                return RedirectToAction(nameof(Login));
+                return RedirectToAction(nameof(SignIn));
             }
 
             SignInResult signInResult = await _signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, false);
@@ -88,7 +88,7 @@
         }
 
         [EnsureAnonymous]
-        public ViewResult Login(string returnUrl)
+        public ViewResult SignIn(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -97,7 +97,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [TypeFilter(typeof(EnsureReturnUrlExistsFilter))]
-        public async Task<IActionResult> Login(Login login, string returnUrl)
+        public async Task<IActionResult> SignIn(Login login, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
