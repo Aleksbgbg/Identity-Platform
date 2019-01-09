@@ -1,6 +1,5 @@
 ﻿namespace Identity.Platform
 {
-    using Identity.Platform.Controllers;
     using Identity.Platform.Models;
     using Identity.Platform.Models.Database;
     using Identity.Platform.Models.Repositories;
@@ -28,8 +27,6 @@
             services.AddIdentity<AppUser, IdentityRole>(options => options.User.AllowedUserNameCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-._@/ ")
                     .AddEntityFrameworkStores<AppIdentityDbContext>()
                     .AddDefaultTokenProviders();
-
-            services.ConfigureApplicationCookie(options => options.LoginPath = $"/Authorization/{nameof(AuthorizationController.Login)}");
 
             services.AddAuthentication()
                     .AddGoogle(options =>

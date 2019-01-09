@@ -4,7 +4,7 @@
     <div class="card col-sm-4 text-center my-4 py-4">
         <h5 class="card-title">So, who do you want to be?</h5>
 
-        <form method="post" asp-controller="Authorization" asp-action="SignUp">
+        <form method="post" asp-controller="Account" asp-action="SignUp">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>
@@ -38,14 +38,14 @@
             <div class="dropdown-divider"></div>
 
             <a class="btn btn-info btn-block"
-               asp-controller="Authorization" asp-action="GoogleLogin"
+               asp-controller="Account" asp-action="GoogleLogin"
                asp-route-returnUrl="@ViewBag.ReturnUrl">
                 Sign in via Google
             </a>
 
             <div class="dropdown-divider"></div>
 
-            <a class="dropdown-item" asp-controller="Authorization" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl">Already a member? Sign in!</a>
+            <a class="dropdown-item" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl">Already a member? Sign in!</a>
         </form>
     </div>
 </div>

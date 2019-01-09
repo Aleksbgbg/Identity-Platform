@@ -14,13 +14,13 @@
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
     [AllowAnonymous]
-    public class AuthorizationController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
 
         private readonly SignInManager<AppUser> _signInManager;
 
-        public AuthorizationController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
