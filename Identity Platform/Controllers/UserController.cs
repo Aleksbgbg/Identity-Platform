@@ -8,11 +8,11 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize(Roles = "User, Admin")]
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private readonly IUserInfoRepository _userInfoRepository;
 
-        public UsersController(IUserInfoRepository userInfoRepository)
+        public UserController(IUserInfoRepository userInfoRepository)
         {
             _userInfoRepository = userInfoRepository;
         }

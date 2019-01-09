@@ -14,8 +14,8 @@
         private static readonly Location[] DefaultLocations =
         {
             new Location("Home", "Index"),
-            new Location("Users", "Index", "Regular Users Homepage"),
-            new Location("Admins", "Index", "Admin Users Homepage")
+            new Location("User", "Index", "User Homepage"),
+            new Location("Admin", "Index", "Admin Homepage")
         };
 
         public ViewViewComponentResult Invoke(Location[] locations)

@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize(Roles = "Admin")]
-    public class AdminsController : Controller
+    public class AdminController : Controller
     {
         public ViewResult Index()
         {
