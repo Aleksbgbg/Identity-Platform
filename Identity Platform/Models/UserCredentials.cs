@@ -7,6 +7,9 @@
         [Required]
         public string Username { get; set; }
 
+        [UIHint("Email")]
+        public string Email { get; set; }
+
         [Required]
         [UIHint("Password")]
         public string Password { get; set; }

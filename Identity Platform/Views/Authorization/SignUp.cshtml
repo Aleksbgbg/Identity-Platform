@@ -16,6 +16,12 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="Email"></label>
+                <input class="form-control" asp-for="Email" placeholder="Email"/>
+                <div><span asp-validation-for="Email" class="text-danger"></span></div>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Password"></label>
                 <input class="form-control" asp-for="Password" placeholder="Password"/>
                 <div><span asp-validation-for="Password" class="text-danger"></span></div>
