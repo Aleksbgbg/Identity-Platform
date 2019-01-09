@@ -10,6 +10,7 @@
         [UIHint("Email")]
         public string Email { get; set; }
 
+        [Display(Name = "Phone Number")]
         [UIHint("PhoneNumber")]
         public string PhoneNumber { get; set; }
 
