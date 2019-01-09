@@ -1,12 +1,19 @@
 ﻿namespace Identity.Platform.Controllers
 {
+    using System.Security.Claims;
+
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            return View(User.Identity);
+            if (User.Identity.IsAuthenticated)
+            {
+                return View((object)User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+
+            return View();
         }
     }
 }
