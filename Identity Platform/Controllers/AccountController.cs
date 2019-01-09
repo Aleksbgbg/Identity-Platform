@@ -182,7 +182,7 @@
                 await _signInManager.SignOutAsync();
             }
 
-            return Redirect("/");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [Authorize]
