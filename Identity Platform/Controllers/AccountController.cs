@@ -145,7 +145,9 @@
             {
                 AppUser newUser = new AppUser
                 {
-                    UserName = userCredentials.Username
+                    UserName = userCredentials.Username,
+                    Email = userCredentials.Email,
+                    PhoneNumber = userCredentials.PhoneNumber
                 };
 
                 IdentityResult createResult = await _userManager.CreateAsync(newUser, userCredentials.Password);
@@ -206,6 +208,7 @@
             if (ModelState.IsValid)
             {
                 targetUser.Email = userCredentials.Email;
+                targetUser.PhoneNumber = userCredentials.PhoneNumber;
 
                 IdentityResult updateResult = await _userManager.UpdateAsync(targetUser);
 
