@@ -26,7 +26,7 @@
             _signInManager = signInManager;
         }
 
-        public IActionResult GoogleLogin(string returnUrl)
+        public ChallengeResult GoogleLogin(string returnUrl)
         {
             string redirectUrl = Url.Action(nameof(GoogleResponse),
                                             new
@@ -175,7 +175,7 @@
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<RedirectToActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -186,7 +186,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit()
+        public async Task<ViewResult> Edit()
         {
             AppUser targetUser = await _userManager.GetUserAsync(User);
 
@@ -226,7 +226,7 @@
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete()
+        public async Task<RedirectToActionResult> Delete()
         {
             AppUser targetUser = await _userManager.GetUserAsync(User);
 
