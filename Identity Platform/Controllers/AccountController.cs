@@ -6,6 +6,7 @@
     using Identity.Platform.Attributes.Filters;
     using Identity.Platform.Extensions;
     using Identity.Platform.Models;
+    using Identity.Platform.Models.ViewModels;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -244,6 +245,28 @@
             }
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [Authorize]
+        [ActionName("View")]
+        public async Task<ViewResult> ViewProfile()
+        {
+            return View(new UserLogin(await _userManager.GetUserAsync(User), true));
+        }
+
+        [Authorize]
+        [ActionName("View")]
+        [Route("[Controller]/[Action]/{UserId}")]
+        public async Task<IActionResult> ViewProfile(string userId)
+        {
+            AppUser targetUser = await _userManager.FindByIdAsync(userId);
+
+            if (targetUser == null)
+            {
+                return NotFound();
+            }
+
+            return View(new UserLogin(targetUser, User.FindFirst(ClaimTypes.NameIdentifier).Value == userId));
         }
     }
 }
