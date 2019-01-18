@@ -1,5 +1,6 @@
 ﻿namespace Identity.Platform
 {
+    using Identity.Platform.Middleware;
     using Identity.Platform.Models;
     using Identity.Platform.Models.Database;
     using Identity.Platform.Models.Repositories;
@@ -47,6 +48,8 @@
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
             }
+
+            app.UseMiddleware<BackupUserImageMiddleware>();
 
             app.UseAuthentication();
             app.UseStaticFiles();
