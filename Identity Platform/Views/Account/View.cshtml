@@ -1,33 +1,74 @@
-﻿@model AppUser
+﻿@model UserLogin
 
-<a class="btn btn-warning" asp-controller="Account" asp-action="Edit">
-    Edit Profile
-</a>
+<div class="card bg-light my-3 p-4">
+    <div class="row">
+        <div class="col-auto text-center">
+            <img src="~/images/user/@(Model.User.Id).@Model.User.ImageExtension" alt="" />
 
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-    Delete Profile
-</button>
+            <h1>@Model.User.UserName</h1>
+            
+            @if (Model.IsLoggedIn)
+            {
+                <a class="btn btn-warning" asp-controller="Account" asp-action="Edit">Edit Profile</a>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Are you sure you no longer want to exist?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    Delete Profile
                 </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you no longer want to exist?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                Profile deletion is permanent and will take place immediately.
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">I'd like to keep my existence</button>
+
+                                <form method="post" asp-controller="Account" asp-action="Delete">
+                                    <input type="submit" class="btn btn-danger" value="Delete me!"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-auto">
+            <div>
+                <h4>Id</h4>
+                <p>@Model.User.Id</p>
             </div>
 
-            <div class="modal-body">
-                Profile deletion is permanent and will take place immediately.
+            <div>
+                <h4>Email</h4>
+                @if (Model.User.Email == null)
+                {
+                    <p class="font-italic">(nothing here)</p>
+                }
+                else
+                {
+                    <p>@Model.User.Email</p>
+                }
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">I'd like to keep my existence</button>
-
-                <form method="post" asp-controller="Account" asp-action="Delete">
-                    <input type="submit" class="btn btn-danger" value="Delete me!"/>
-                </form>
+            <div>
+                <h4>Phone</h4>
+                @if (Model.User.PhoneNumber == null)
+                {
+                    <p class="font-italic">(nothing here)</p>
+                }
+                else
+                {
+                    <p>@Model.User.PhoneNumber</p>
+                }
             </div>
         </div>
     </div>
