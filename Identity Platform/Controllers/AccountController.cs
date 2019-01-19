@@ -1,5 +1,6 @@
 ﻿namespace Identity.Platform.Controllers
 {
+    using System.IO;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -9,10 +10,13 @@
     using Identity.Platform.Models.ViewModels;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
+    using IOFile = System.IO.File;
 
     [AllowAnonymous]
     public class AccountController : Controller
@@ -21,10 +25,13 @@
 
         private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHostingEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public ViewResult AccessDenied()
@@ -198,7 +205,11 @@
 
             return View(new UserCredentials
             {
-                Username = targetUser.UserName
+                UserId = targetUser.Id,
+                ImageExtension = targetUser.ImageExtension,
+                Username = targetUser.UserName,
+                Email = targetUser.Email,
+                PhoneNumber =  targetUser.PhoneNumber
             });
         }
 
@@ -213,6 +224,30 @@
 
             if (ModelState.IsValid)
             {
+                IFormFile image = userCredentials.Image;
+
+                if (image != null)
+                {
+                    string userImagesPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "user");
+
+                    string newExtension = Path.GetExtension(image.FileName);
+
+                    string newExtensionPure = newExtension.TrimStart('.');
+
+                    if (newExtensionPure != targetUser.ImageExtension)
+                    {
+                        IOFile.Delete(Path.Combine(userImagesPath, string.Concat(targetUser.Id, ".", targetUser.ImageExtension)));
+                        targetUser.ImageExtension = newExtensionPure;
+                    }
+
+                    string newImagePath = Path.Combine(userImagesPath, string.Concat(targetUser.Id, newExtension));
+
+                    using (FileStream fileStream = IOFile.Create(newImagePath))
+                    {
+                        await image.CopyToAsync(fileStream);
+                    }
+                }
+
                 targetUser.Email = userCredentials.Email;
                 targetUser.PhoneNumber = userCredentials.PhoneNumber;
 
