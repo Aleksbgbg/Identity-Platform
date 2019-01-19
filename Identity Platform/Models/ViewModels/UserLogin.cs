@@ -2,14 +2,14 @@
 {
     public class UserLogin
     {
-        public UserLogin(AppUser user, bool isLoggedIn)
+        public UserLogin(AppUser user, bool isAuthenticatedUser)
         {
             User = user;
-            IsLoggedIn = isLoggedIn;
+            IsAuthenticatedUser = isAuthenticatedUser;
         }
 
         public AppUser User { get; }
 
-        public bool IsLoggedIn { get; }
+        public bool IsAuthenticatedUser { get; }
     }
 }

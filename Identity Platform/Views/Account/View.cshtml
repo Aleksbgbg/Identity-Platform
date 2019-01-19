@@ -7,7 +7,7 @@
 
             <h1>@Model.User.UserName</h1>
             
-            @if (Model.IsLoggedIn)
+            @if (Model.IsAuthenticatedUser)
             {
                 <a class="btn btn-warning" asp-controller="Account" asp-action="Edit">Edit Profile</a>
 
