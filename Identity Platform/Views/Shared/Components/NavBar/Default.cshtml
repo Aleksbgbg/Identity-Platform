@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NavLocation>
+﻿@model NavbarModel
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" asp-controller="Home" asp-action="Index">
@@ -12,7 +12,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            @foreach (NavLocation navLocation in Model)
+            @foreach (NavLocation navLocation in Model.NavLocations)
             {
                 <li class="@(navLocation.IsActive ? "nav-item active" : "nav-item")">
                     <a class="nav-link" asp-controller="@navLocation.Location.Controller" asp-action="@navLocation.Location.Action">@navLocation.Location.Name</a>
@@ -22,9 +22,27 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <form class="form-inline" method="post" asp-controller="Account" asp-action="Logout">
-                <button class="btn btn-outline-light" type="submit">Sign out</button>
-            </form>
+            <div class="btn-group">
+                <button type="button" class="btn btn-dark">
+                    <img src="~/images/user/@(Model.CurrentUser.Id).@Model.CurrentUser.ImageExtension" alt="" width="30" height="30"/>
+                    <span class="mx-1"></span>
+                    <span>@Model.CurrentUser.UserName</span>
+                </button>
+
+                <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" asp-controller="Account" asp-action="View">My Profile</a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <form class="form-inline" method="post" asp-controller="Account" asp-action="Logout">
+                        <button class="dropdown-item" type="submit">Sign out</button>
+                    </form>
+                </div>
+            </div>
         }
     </div>
 </nav>
