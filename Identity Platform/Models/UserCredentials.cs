@@ -2,8 +2,16 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     public class UserCredentials
     {
+        public IFormFile Image { get; set; }
+
+        public string UserId { get; set; }
+
+        public string ImageExtension { get; set; }
+
         [Required]
         public string Username { get; set; }
 
