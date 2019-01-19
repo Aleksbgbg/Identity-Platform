@@ -70,6 +70,18 @@
                     <p>@Model.User.PhoneNumber</p>
                 }
             </div>
+
+            <div>
+                <h4>Roles</h4>
+                @if (Model.Roles.Any())
+                {
+                    <p>@string.Join(", ", Model.Roles)</p>
+                }
+                else
+                {
+                    <p class="font-italic">(no roles?!?)</p>
+                }
+            </div>
         </div>
     </div>
 </div>

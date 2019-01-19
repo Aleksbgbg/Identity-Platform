@@ -251,7 +251,9 @@
         [ActionName("View")]
         public async Task<ViewResult> ViewProfile()
         {
-            return View(new UserLogin(await _userManager.GetUserAsync(User), isAuthenticatedUser: true));
+            AppUser currentUser = await _userManager.GetUserAsync(User);
+
+            return View(new UserLogin(currentUser, await _userManager.GetRolesAsync(currentUser), isAuthenticatedUser: true));
         }
 
         [Authorize]
@@ -276,7 +278,7 @@
                 return NotFound();
             }
 
-            return View(new UserLogin(targetUser, isAuthenticatedUser: false));
+            return View(new UserLogin(targetUser, await _userManager.GetRolesAsync(targetUser), isAuthenticatedUser: false));
         }
     }
 }
