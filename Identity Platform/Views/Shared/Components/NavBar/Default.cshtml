@@ -23,11 +23,11 @@
         @if (User.Identity.IsAuthenticated)
         {
             <div class="btn-group">
-                <button type="button" class="btn btn-dark">
+                <a class="btn btn-dark text-white" asp-controller="Account" asp-action="View">
                     <img src="~/images/user/@(Model.CurrentUser.Id).@Model.CurrentUser.ImageExtension" alt="" width="30" height="30"/>
                     <span class="mx-1"></span>
                     <span>@Model.CurrentUser.UserName</span>
-                </button>
+                </a>
 
                 <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
