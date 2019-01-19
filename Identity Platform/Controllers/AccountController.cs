@@ -251,7 +251,7 @@
         [ActionName("View")]
         public async Task<ViewResult> ViewProfile()
         {
-            return View(new UserLogin(await _userManager.GetUserAsync(User), true));
+            return View(new UserLogin(await _userManager.GetUserAsync(User), isAuthenticatedUser: true));
         }
 
         [Authorize]
@@ -259,6 +259,16 @@
         [Route("[Controller]/[Action]/{UserId}")]
         public async Task<IActionResult> ViewProfile(string userId)
         {
+            if (User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
+            {
+                return RedirectToAction("View", new
+                {
+                    // Must nullify UserId route parameter, otherwise
+                    // we redirect recursively to the current action
+                    UserId = (string)null
+                });
+            }
+
             AppUser targetUser = await _userManager.FindByIdAsync(userId);
 
             if (targetUser == null)
@@ -266,7 +276,7 @@
                 return NotFound();
             }
 
-            return View(new UserLogin(targetUser, User.FindFirst(ClaimTypes.NameIdentifier).Value == userId));
+            return View(new UserLogin(targetUser, isAuthenticatedUser: false));
         }
     }
 }
