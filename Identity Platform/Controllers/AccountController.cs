@@ -7,6 +7,7 @@
     using Identity.Platform.Attributes.Filters;
     using Identity.Platform.Extensions;
     using Identity.Platform.Models;
+    using Identity.Platform.Models.Repositories;
     using Identity.Platform.Models.ViewModels;
 
     using Microsoft.AspNetCore.Authorization;
@@ -19,6 +20,7 @@
     using IOFile = System.IO.File;
 
     [AllowAnonymous]
+    [Route("[Controller]/[Action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -27,11 +29,14 @@
 
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHostingEnvironment hostingEnvironment)
+        private readonly ICommentRepository _commentRepository;
+
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHostingEnvironment hostingEnvironment, ICommentRepository commentRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _hostingEnvironment = hostingEnvironment;
+            _commentRepository = commentRepository;
         }
 
         public ViewResult AccessDenied()
@@ -209,7 +214,7 @@
                 ImageExtension = targetUser.ImageExtension,
                 Username = targetUser.UserName,
                 Email = targetUser.Email,
-                PhoneNumber =  targetUser.PhoneNumber
+                PhoneNumber = targetUser.PhoneNumber
             });
         }
 
@@ -288,15 +293,21 @@
         {
             AppUser currentUser = await _userManager.GetUserAsync(User);
 
-            return View(new UserLogin(currentUser, await _userManager.GetRolesAsync(currentUser), isAuthenticatedUser: true));
+            ViewBag.AuthenticatedUserId = currentUser.Id;
+
+            return View(new UserAccountPageDetails(currentUser,
+                                                   await _userManager.GetRolesAsync(currentUser),
+                                                   _commentRepository.Comments));
         }
 
         [Authorize]
         [ActionName("View")]
-        [Route("[Controller]/[Action]/{UserId}")]
+        [Route("{UserId}")]
         public async Task<IActionResult> ViewProfile(string userId)
         {
-            if (User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (currentUserId == userId)
             {
                 return RedirectToAction("View", new
                 {
@@ -313,7 +324,39 @@
                 return NotFound();
             }
 
-            return View(new UserLogin(targetUser, await _userManager.GetRolesAsync(targetUser), isAuthenticatedUser: false));
+            ViewBag.AuthenticatedUserId = currentUserId;
+
+            return View(new UserAccountPageDetails(targetUser,
+                                                   await _userManager.GetRolesAsync(targetUser),
+                                                   _commentRepository.Comments));
+        }
+
+        [Authorize]
+        [HttpPost("{UserId}")]
+        public async Task<IActionResult> Comment(string userId, Comment comment)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("View");
+            }
+
+            AppUser targetUser = await _userManager.FindByIdAsync(userId);
+
+            if (targetUser == null)
+            {
+                return BadRequest();
+            }
+
+            comment.OwnerId = userId;
+            comment.AuthorId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            await _commentRepository.AddCommentAsync(comment);
+
+            return RedirectToAction("View",
+                                    new
+                                    {
+                                        UserId = userId
+                                    });
         }
     }
 }
