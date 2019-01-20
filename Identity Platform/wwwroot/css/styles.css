@@ -9,3 +9,11 @@ textarea.comment {
 p {
     word-break: break-all;
 }
+
+button.btn-delete-comment {
+    visibility: hidden;
+}
+
+div.comment-delete-gutter {
+    width: 33.25px;
+}
