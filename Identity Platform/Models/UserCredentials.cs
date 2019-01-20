@@ -15,21 +15,21 @@
         [Required]
         public string Username { get; set; }
 
-        [UIHint("Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Display(Name = "Phone Number")]
-        [UIHint("PhoneNumber")]
+        [Phone]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [UIHint("Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
         [Compare(nameof(Password))]
         [Display(Name = "Repeat Password")]
-        [UIHint("Password")]
+        [DataType(DataType.Password)]
         public string RepeatPassword { get; set; }
     }
 }

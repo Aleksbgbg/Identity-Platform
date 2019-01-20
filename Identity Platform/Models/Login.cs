@@ -8,7 +8,7 @@
         public string Username { get; set; }
 
         [Required]
-        [UIHint("Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
