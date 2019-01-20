@@ -4,6 +4,9 @@
 
     public class Comment
     {
+        [Key]
+        public string Id { get; set; }
+
         // User whose wall the comment appears on
         public string OwnerId { get; set; }
 
