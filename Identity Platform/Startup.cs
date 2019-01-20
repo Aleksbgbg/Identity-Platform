@@ -37,6 +37,7 @@
                         options.ClientSecret = _configuration["Secrets:GoogleApi:ClientSecret"];
                     });
 
+            services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IUserInfoRepository, UserInfoRepository>();
 
             services.AddHttpContextAccessor();
