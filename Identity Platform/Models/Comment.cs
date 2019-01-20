@@ -1,6 +1,8 @@
 ﻿namespace Identity.Platform.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Comment
     {
@@ -12,7 +14,12 @@
 
         public string AuthorId { get; set; }
 
+        [ForeignKey(nameof(AuthorId))]
+        public AppUser Author { get; set; }
+
         [Required(ErrorMessage = "You cannot post an empty comment.")]
         public string Content { get; set; }
+
+        public DateTime PostedAt { get; set; }
     }
 }
