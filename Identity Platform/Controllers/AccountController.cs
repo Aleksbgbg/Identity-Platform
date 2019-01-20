@@ -1,5 +1,6 @@
 ﻿namespace Identity.Platform.Controllers
 {
+    using System;
     using System.IO;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -294,6 +295,7 @@
             AppUser currentUser = await _userManager.GetUserAsync(User);
 
             ViewBag.AuthenticatedUserId = currentUser.Id;
+            ViewBag.ProfileId = currentUser.Id;
 
             return View(new UserAccountPageDetails(currentUser,
                                                    await _userManager.GetRolesAsync(currentUser),
@@ -325,6 +327,7 @@
             }
 
             ViewBag.AuthenticatedUserId = currentUserId;
+            ViewBag.ProfileId = userId;
 
             return View(new UserAccountPageDetails(targetUser,
                                                    await _userManager.GetRolesAsync(targetUser),
@@ -349,6 +352,7 @@
 
             comment.OwnerId = userId;
             comment.AuthorId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            comment.PostedAt = DateTime.Now;
 
             await _commentRepository.AddCommentAsync(comment);
 

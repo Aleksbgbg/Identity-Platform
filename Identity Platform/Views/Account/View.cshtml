@@ -90,17 +90,26 @@
         <div class="m-3">
             <partial name="CommentForm" model="null"/>
         </div>
-        
+
         <div class="mx-3">
             @foreach (Comment comment in Model.Comments.Where(comment => comment.OwnerId == Model.User.Id))
             {
+                bool isAuthenticatedUser = ViewBag.AuthenticatedUserId == comment.AuthorId;
+
                 <div class="d-flex w-100 text-wrap">
                     <div class="mr-2">
                         <a asp-action="View" asp-route-userId="@comment.AuthorId">
-                            <img class="border @(ViewBag.AuthenticatedUserId == comment.AuthorId ? "border-primary" : "border-dark") rounded" alt="" height="30" width="30" user-id="@comment.AuthorId"/>
+                            <img class="border @(isAuthenticatedUser ? "border-primary" : "border-dark") rounded" alt="" height="30" width="30" user-id="@comment.AuthorId"/>
                         </a>
                     </div>
-                    <p class="text-wrap">@comment.Content</p>
+                    <div>
+                        <h5>
+                            <a class="@(isAuthenticatedUser ? "text-primary" : "text-dark")" asp-action="View" asp-route-userId="@comment.AuthorId">@comment.Author.UserName</a>
+                            <small class="text-muted">@comment.PostedAt.ToString("dd MMM, yyyy @ hh:mm")@(comment.PostedAt.Hour < 12 ? "am" : "pm")</small>
+                        </h5>
+
+                        <p>@comment.Content</p>
+                    </div>
                 </div>
             }
         </div>

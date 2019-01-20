@@ -1,6 +1,6 @@
 ﻿@model Comment
 
-<form method="post" asp-controller="Account" asp-action="Comment">
+<form method="post" asp-controller="Account" asp-action="Comment" asp-route-userId="@ViewBag.ProfileId">
     <div class="form-group">
         <div class="d-flex w-100">
             <img class="border border-primary rounded mr-2" alt="" height="30" width="30" user-claims-principal="@User"/>
