@@ -24,7 +24,7 @@
         {
             <div class="btn-group">
                 <a class="btn btn-dark text-white" asp-controller="Account" asp-action="View">
-                    <img src="~/images/user/@(Model.CurrentUser.Id).@Model.CurrentUser.ImageExtension" alt="" width="30" height="30"/>
+                    <img alt="" width="30" height="30" user-claims-principal="@User"/>
                     <span class="mx-1"></span>
                     <span>@Model.CurrentUser.UserName</span>
                 </a>
