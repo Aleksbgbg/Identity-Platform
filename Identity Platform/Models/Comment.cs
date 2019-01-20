@@ -12,7 +12,7 @@
 
         public string AuthorId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You cannot post an empty comment.")]
         public string Content { get; set; }
     }
 }
