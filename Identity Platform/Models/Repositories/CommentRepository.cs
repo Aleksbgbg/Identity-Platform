@@ -14,7 +14,7 @@
             _appIdentityDbContext = appIdentityDbContext;
         }
 
-        public IQueryable<Comment> Comments { get; }
+        public IQueryable<Comment> Comments => _appIdentityDbContext.Comments;
 
         public void AddComment(Comment comment)
         {
