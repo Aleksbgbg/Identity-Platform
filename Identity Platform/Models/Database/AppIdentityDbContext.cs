@@ -8,5 +8,7 @@
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
         }
+
+        public DbSet<Comment> Comments { get; protected set; }
     }
 }
