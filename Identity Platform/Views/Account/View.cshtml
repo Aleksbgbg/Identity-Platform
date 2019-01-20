@@ -1,5 +1,17 @@
 ﻿@model UserAccountPageDetails
 
+@section Css
+{
+    <!-- font awesome not available from unpkg -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
+}
+
+@section Scripts
+{
+    <script src="~/js/show-delete-on-hover.js"></script>
+}
+
 <div>
     <div class="card bg-light my-3 p-4">
         <div class="row">
@@ -12,11 +24,11 @@
                 {
                     <a class="btn btn-warning" asp-controller="Account" asp-action="Edit">Edit Profile</a>
 
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteProfileModal">
                         Delete Profile
                     </button>
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -96,20 +108,37 @@
             {
                 bool isAuthenticatedUser = ViewBag.AuthenticatedUserId == comment.AuthorId;
 
-                <div class="d-flex w-100 text-wrap">
+                <div class="comment d-flex w-100 text-wrap">
                     <div class="mr-2">
                         <a asp-action="View" asp-route-userId="@comment.AuthorId">
                             <img class="border @(isAuthenticatedUser ? "border-primary" : "border-dark") rounded" alt="" height="30" width="30" user-id="@comment.AuthorId"/>
                         </a>
                     </div>
-                    <div>
-                        <h5>
-                            <a class="@(isAuthenticatedUser ? "text-primary" : "text-dark")" asp-action="View" asp-route-userId="@comment.AuthorId">@comment.Author.UserName</a>
-                            <small class="text-muted">@comment.PostedAt.ToString("dd MMM, yyyy @ hh:mm")@(comment.PostedAt.Hour < 12 ? "am" : "pm")</small>
-                        </h5>
+                    <div class="w-100">
+                        <div>
+                            <h5 class="d-inline">
+                                <a class="@(isAuthenticatedUser ? "text-primary" : "text-dark")" asp-action="View" asp-route-userId="@comment.AuthorId">@comment.Author.UserName</a>
+                                <small class="text-muted">@comment.PostedAt.ToString("dd MMM, yyyy @ hh:mm")@(comment.PostedAt.Hour < 12 ? "am" : "pm")</small>
+
+                            </h5>
+                        </div>
 
                         <p>@comment.Content</p>
                     </div>
+                    @if (isAuthenticatedUser || ViewBag.AuthenticatedUserId == comment.OwnerId)
+                    {
+                        <div class="ml-2">
+                            <form asp-action="DeleteComment" asp-route-commentId="@comment.Id">
+                                <button type="submit" class="btn btn-sm btn-danger btn-delete-comment">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="ml-2 comment-delete-gutter"></div>
+                    }
                 </div>
             }
         </div>

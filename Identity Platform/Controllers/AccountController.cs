@@ -336,6 +336,7 @@
 
         [Authorize]
         [HttpPost("{UserId}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comment(string userId, Comment comment)
         {
             if (!ModelState.IsValid)
@@ -361,6 +362,28 @@
                                     {
                                         UserId = userId
                                     });
+        }
+
+        [Authorize]
+        [HttpPost("/[Controller]/Owner/{UserId}/[Action]/{CommentId}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteComment(string userId, string commentId)
+        {
+            string authenticatedUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Comment comment = await _commentRepository.RetrieveCommentAsync(commentId);
+
+            if (authenticatedUserId == comment.AuthorId || authenticatedUserId == comment.OwnerId)
+            {
+                await _commentRepository.DeleteCommentAsync(comment);
+
+                return RedirectToAction("View",
+                                        new
+                                        {
+                                            UserId = userId
+                                        });
+            }
+
+            return Forbid();
         }
     }
 }
