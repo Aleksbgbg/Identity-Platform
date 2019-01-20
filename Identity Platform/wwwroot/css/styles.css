@@ -5,3 +5,7 @@
 textarea.comment {
     height: 125px;
 }
+
+p {
+    word-break: break-all;
+}
