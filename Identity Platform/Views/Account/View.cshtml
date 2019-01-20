@@ -128,7 +128,7 @@
                     @if (isAuthenticatedUser || ViewBag.AuthenticatedUserId == comment.OwnerId)
                     {
                         <div class="ml-2">
-                            <form asp-action="DeleteComment" asp-route-commentId="@comment.Id">
+                            <form method="post" asp-action="DeleteComment" asp-route-userId="@ViewBag.AuthenticatedUserId" asp-route-commentId="@comment.Id">
                                 <button type="submit" class="btn btn-sm btn-danger btn-delete-comment">
                                     <i class="fas fa-trash"></i>
                                 </button>
