@@ -6,13 +6,15 @@
     <link rel="icon" type="img/ico" href="~/images/shield.png" />
 
     <environment names="Staging, Production">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     </environment>
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
     </environment>
-    
+
     <link rel="stylesheet" href="~/css/styles.css"/>
+    
+    @RenderSection("Css", required: false)
 </head>
 <body>
     <header>
