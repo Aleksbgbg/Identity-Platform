@@ -1,0 +1,7 @@
+﻿textarea.no-resize {
+    resize: none;
+}
+
+textarea.comment {
+    height: 125px;
+}
