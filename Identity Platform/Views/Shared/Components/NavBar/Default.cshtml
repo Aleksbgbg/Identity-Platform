@@ -23,7 +23,7 @@
         @if (User.Identity.IsAuthenticated)
         {
             <div class="btn-group">
-                <a class="btn btn-dark text-white" asp-controller="Account" asp-action="View">
+                <a class="btn btn-dark text-white" asp-controller="Account" asp-action="View" asp-route-userId="@null">
                     <img alt="" width="30" height="30" user-claims-principal="@User"/>
                     <span class="mx-1"></span>
                     <span>@Model.CurrentUser.UserName</span>
@@ -34,7 +34,7 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" asp-controller="Account" asp-action="View">My Profile</a>
+                    <a class="dropdown-item" asp-controller="Account" asp-action="View" asp-action-userId="null">My Profile</a>
 
                     <div class="dropdown-divider"></div>
 
