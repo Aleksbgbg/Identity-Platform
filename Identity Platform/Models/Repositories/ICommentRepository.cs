@@ -7,8 +7,10 @@
     {
         IQueryable<Comment> Comments { get; }
 
-        void AddComment(Comment comment);
-
         Task AddCommentAsync(Comment comment);
+
+        Task<Comment> RetrieveCommentAsync(string commentId);
+
+        Task DeleteCommentAsync(Comment comment);
     }
 }

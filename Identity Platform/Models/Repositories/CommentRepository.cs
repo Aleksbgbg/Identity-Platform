@@ -16,15 +16,20 @@
 
         public IQueryable<Comment> Comments => _appIdentityDbContext.Comments;
 
-        public void AddComment(Comment comment)
-        {
-            _appIdentityDbContext.Comments.Add(comment);
-            _appIdentityDbContext.SaveChanges();
-        }
-
         public async Task AddCommentAsync(Comment comment)
         {
             await _appIdentityDbContext.Comments.AddAsync(comment);
+            await _appIdentityDbContext.SaveChangesAsync();
+        }
+
+        public Task<Comment> RetrieveCommentAsync(string commentId)
+        {
+            return _appIdentityDbContext.Comments.FindAsync(commentId);
+        }
+
+        public async Task DeleteCommentAsync(Comment comment)
+        {
+            _appIdentityDbContext.Comments.Remove(comment);
             await _appIdentityDbContext.SaveChangesAsync();
         }
     }
