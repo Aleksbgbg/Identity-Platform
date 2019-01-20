@@ -1,14 +1,14 @@
 ﻿@model Comment
 
 <form method="post" asp-controller="Account" asp-action="Comment" asp-route-userId="@ViewBag.UserId">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <div class="d-flex w-100">
+            <img class="border border-primary rounded mr-2" alt="" height="30" width="30" user-claims-principal="@User"/>
 
-    <div class="form-group d-flex w-100">
-        <img class="border border-primary rounded mr-2" alt="" height="30" width="30" user-claims-principal="@User"/>
+            <textarea class="form-control no-resize comment" asp-for="Content" placeholder="Comment here"></textarea>
+        </div>
 
-        <textarea class="form-control no-resize comment" asp-for="Content" placeholder="Comment here"></textarea>
-
-        <div><span asp-validation-for="Content" class="text-danger"></span></div>
+        <div class="mt-2"><span asp-validation-for="Content" class="text-danger"></span></div>
     </div>
 
     <button class="btn btn-primary float-right" type="submit">Post Comment</button>
