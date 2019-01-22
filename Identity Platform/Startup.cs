@@ -61,6 +61,39 @@
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: null,
+                                template: "Account/Owner/{UserId}/DeleteComment/{CommentId}",
+                                defaults: new
+                                {
+                                    Controller = "Account",
+                                    Action = "DeleteComment"
+                                });
+
+                routes.MapRoute(name: null,
+                                template: "Account/View/{UserId?}/Page/{PageNumber:int}",
+                                defaults: new
+                                {
+                                    Controller = "Account",
+                                    Action = "View",
+                                    PageNumber = 1
+                                });
+
+                routes.MapRoute(name: null,
+                                template: "Account/{Action}/{UserId}",
+                                defaults: new
+                                {
+                                    Controller = "Account",
+                                    PageNumber = 1
+                                });
+
+                routes.MapRoute(name: null,
+                                template: "Account/{Action}",
+                                defaults: new
+                                {
+                                    Controller = "Account",
+                                    PageNumber = 1
+                                });
+
+                routes.MapRoute(name: null,
                                 template: "{Controller=Home}/{Action=Index}");
             });
         }
