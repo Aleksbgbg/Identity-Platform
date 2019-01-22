@@ -104,7 +104,12 @@
         </div>
 
         <div class="mx-3">
-            @foreach (Comment comment in Model.Comments.Where(comment => comment.OwnerId == Model.User.Id))
+            @foreach (Comment comment in Model.Comments
+                                             .Where(comment => comment.OwnerId == Model.User.Id)
+                                             .AsEnumerable() // No Reverse implementation for IQueryable from db provider
+                                             .Reverse()
+                                             .Skip(Model.CommentsPagingInfo.ItemsPerPage * (Model.CommentsPagingInfo.CurrentPage - 1))
+                                             .Take(Model.CommentsPagingInfo.ItemsPerPage))
             {
                 bool isAuthenticatedUser = ViewBag.AuthenticatedUserId == comment.AuthorId;
 
@@ -142,5 +147,27 @@
                 </div>
             }
         </div>
+
+        @if (Model.CommentsPagingInfo.TotalPages > 1)
+        {
+            <hr class="mx-2"/>
+
+            <nav class="mx-2">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item@(Model.CommentsPagingInfo.CurrentPage == 1 ? " disabled" : string.Empty)">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" asp-route-pageNumber="1">First</a>
+                    </li>
+                    @for (int pageIndex = Model.CommentsPagingInfo.StartPage; pageIndex <= Model.CommentsPagingInfo.EndPage; ++pageIndex)
+                    {
+                        <li class="page-item@(Model.CommentsPagingInfo.CurrentPage == pageIndex ? " active" : string.Empty)">
+                            <a class="page-link" asp-action="View" asp-route-pageNumber="@pageIndex">@pageIndex</a>
+                        </li>
+                    }
+                    <li class="page-item@(Model.CommentsPagingInfo.CurrentPage == Model.CommentsPagingInfo.TotalPages ? " disabled" : string.Empty)">
+                        <a class="page-link" asp-route-pageNumber="@Model.CommentsPagingInfo.TotalPages">Last</a>
+                    </li>
+                </ul>
+            </nav>
+        }
     </div>
 </div>
