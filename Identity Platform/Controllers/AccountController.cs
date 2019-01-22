@@ -311,7 +311,7 @@
         [ActionName("View")]
         public async Task<IActionResult> ViewProfile(string userId, int pageNumber = 1)
         {
-            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string currentUserId = User.FindId();
 
             if (currentUserId == userId)
             {
@@ -357,7 +357,7 @@
             }
 
             comment.OwnerId = userId;
-            comment.AuthorId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            comment.AuthorId = User.FindId();
             comment.PostedAt = DateTime.Now;
 
             await _commentRepository.AddCommentAsync(comment);
@@ -374,7 +374,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteComment(string userId, string commentId)
         {
-            string authenticatedUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string authenticatedUserId = User.FindId();
             Comment comment = await _commentRepository.RetrieveCommentAsync(commentId);
 
             if (authenticatedUserId == comment.AuthorId || authenticatedUserId == comment.OwnerId)
