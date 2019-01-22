@@ -21,7 +21,6 @@
     using IOFile = System.IO.File;
 
     [AllowAnonymous]
-    [Route("[Controller]/[Action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -242,7 +241,12 @@
 
                     if (newExtensionPure != targetUser.ImageExtension)
                     {
-                        IOFile.Delete(Path.Combine(userImagesPath, string.Concat(targetUser.Id, ".", targetUser.ImageExtension)));
+                        Directory.CreateDirectory(userImagesPath);
+                        string filePath = Path.Combine(userImagesPath, string.Concat(targetUser.Id, ".", targetUser.ImageExtension));
+                        if (IOFile.Exists(filePath))
+                        {
+                            IOFile.Delete(filePath);
+                        }
                         targetUser.ImageExtension = newExtensionPure;
                     }
 
@@ -290,7 +294,7 @@
 
         [Authorize]
         [ActionName("View")]
-        public async Task<ViewResult> ViewProfile()
+        public async Task<ViewResult> ViewProfile(int pageNumber = 1)
         {
             AppUser currentUser = await _userManager.GetUserAsync(User);
 
@@ -299,13 +303,13 @@
 
             return View(new UserAccountPageDetails(currentUser,
                                                    await _userManager.GetRolesAsync(currentUser),
-                                                   _commentRepository.Comments));
+                                                   _commentRepository.Comments,
+                                                   pageNumber));
         }
 
         [Authorize]
         [ActionName("View")]
-        [Route("{UserId}")]
-        public async Task<IActionResult> ViewProfile(string userId)
+        public async Task<IActionResult> ViewProfile(string userId, int pageNumber = 1)
         {
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
@@ -331,11 +335,12 @@
 
             return View(new UserAccountPageDetails(targetUser,
                                                    await _userManager.GetRolesAsync(targetUser),
-                                                   _commentRepository.Comments));
+                                                   _commentRepository.Comments,
+                                                   pageNumber));
         }
 
         [Authorize]
-        [HttpPost("{UserId}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comment(string userId, Comment comment)
         {
@@ -365,7 +370,7 @@
         }
 
         [Authorize]
-        [HttpPost("/[Controller]/Owner/{UserId}/[Action]/{CommentId}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteComment(string userId, string commentId)
         {
