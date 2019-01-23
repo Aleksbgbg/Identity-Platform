@@ -73,11 +73,11 @@
                                 defaults: new
                                 {
                                     Controller = "Account",
-                                    PageNumber = "1"
+                                    Page = "1"
                                 });
 
                 routes.MapRoute(name: null,
-                                template: "Account/View/{UserId:guid}/Page/{PageNumber:int}",
+                                template: "Account/View/{UserId:guid}/Page/{Page:int}",
                                 defaults: new
                                 {
                                     Controller = "Account",
@@ -85,7 +85,7 @@
                                 });
 
                 routes.MapRoute(name: null,
-                                template: "Account/View/Page/{PageNumber:int}",
+                                template: "Account/View/Page/{Page:int}",
                                 defaults: new
                                 {
                                     Controller = "Account",

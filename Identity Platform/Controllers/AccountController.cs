@@ -295,7 +295,7 @@
 
         [Authorize]
         [ActionName("View")]
-        public async Task<ViewResult> ViewProfile(int pageNumber)
+        public async Task<ViewResult> ViewProfile(int page)
         {
             AppUser currentUser = await _userManager.GetUserAsync(User);
 
@@ -305,13 +305,13 @@
             return View(new UserAccountPageDetails(currentUser,
                                                    await _userManager.GetRolesAsync(currentUser),
                                                    _commentRepository.Comments,
-                                                   pageNumber));
+                                                   page));
         }
 
         [Authorize]
         [ActionName("View")]
         [RouteParameterConstraint("UserId")]
-        public async Task<IActionResult> ViewProfile(string userId, int pageNumber)
+        public async Task<IActionResult> ViewProfile(string userId, int page)
         {
             string currentUserId = User.FindId();
 
@@ -338,7 +338,7 @@
             return View(new UserAccountPageDetails(targetUser,
                                                    await _userManager.GetRolesAsync(targetUser),
                                                    _commentRepository.Comments,
-                                                   pageNumber));
+                                                   page));
         }
 
         [Authorize]
