@@ -61,7 +61,7 @@
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: null,
-                                template: "Account/Owner/{UserId}/DeleteComment/{CommentId}",
+                                template: "Account/Owner/{UserId:guid}/DeleteComment/{CommentId:guid}",
                                 defaults: new
                                 {
                                     Controller = "Account",
@@ -69,28 +69,27 @@
                                 });
 
                 routes.MapRoute(name: null,
-                                template: "Account/View/{UserId?}/Page/{PageNumber:int}",
+                                template: "Account/{Action}/{UserId:guid?}",
                                 defaults: new
                                 {
                                     Controller = "Account",
-                                    Action = "View",
-                                    PageNumber = 1
+                                    PageNumber = "1"
                                 });
 
                 routes.MapRoute(name: null,
-                                template: "Account/{Action}/{UserId}",
+                                template: "Account/View/{UserId:guid}/Page/{PageNumber:int}",
                                 defaults: new
                                 {
                                     Controller = "Account",
-                                    PageNumber = 1
+                                    Action = "View"
                                 });
 
                 routes.MapRoute(name: null,
-                                template: "Account/{Action}",
+                                template: "Account/View/Page/{PageNumber:int}",
                                 defaults: new
                                 {
                                     Controller = "Account",
-                                    PageNumber = 1
+                                    Action = "View"
                                 });
 
                 routes.MapRoute(name: null,
