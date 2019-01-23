@@ -154,18 +154,47 @@
 
             <nav class="mx-2">
                 <ul class="pagination justify-content-end">
-                    <li class="page-item@(Model.CommentsPagingInfo.CurrentPage == 1 ? " disabled" : string.Empty)">
-                        <a class="page-link" tabindex="-1" aria-disabled="true" asp-route-pageNumber="1">First</a>
-                    </li>
-                    @for (int pageIndex = Model.CommentsPagingInfo.StartPage; pageIndex <= Model.CommentsPagingInfo.EndPage; ++pageIndex)
+                    @if (Model.CommentsPagingInfo.CurrentPage == 1)
                     {
-                        <li class="page-item@(Model.CommentsPagingInfo.CurrentPage == pageIndex ? " active" : string.Empty)">
-                            <a class="page-link" asp-action="View" asp-route-pageNumber="@pageIndex">@pageIndex</a>
+                        <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1" aria-disabled="true" asp-route-page="1">First</a>
                         </li>
                     }
-                    <li class="page-item@(Model.CommentsPagingInfo.CurrentPage == Model.CommentsPagingInfo.TotalPages ? " disabled" : string.Empty)">
-                        <a class="page-link" asp-route-pageNumber="@Model.CommentsPagingInfo.TotalPages">Last</a>
-                    </li>
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-route-page="1">First</a>
+                        </li>
+                    }
+
+                    @for (int pageIndex = Model.CommentsPagingInfo.StartPage; pageIndex <= Model.CommentsPagingInfo.EndPage; ++pageIndex)
+                    {
+                        if (Model.CommentsPagingInfo.CurrentPage == pageIndex)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link" asp-route-page="@pageIndex">@pageIndex</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-route-page="@pageIndex">@pageIndex</a>
+                            </li>
+                        }
+                    }
+
+                    @if (Model.CommentsPagingInfo.CurrentPage == Model.CommentsPagingInfo.TotalPages)
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1" aria-disabled="true" asp-route-page="@Model.CommentsPagingInfo.TotalPages">Last</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-route-page="@Model.CommentsPagingInfo.TotalPages">Last</a>
+                        </li>
+                    }
                 </ul>
             </nav>
         }
