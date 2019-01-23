@@ -5,6 +5,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Identity.Platform.Attributes.Constraints;
     using Identity.Platform.Attributes.Filters;
     using Identity.Platform.Extensions;
     using Identity.Platform.Models;
@@ -294,7 +295,7 @@
 
         [Authorize]
         [ActionName("View")]
-        public async Task<ViewResult> ViewProfile(int pageNumber = 1)
+        public async Task<ViewResult> ViewProfile(int pageNumber)
         {
             AppUser currentUser = await _userManager.GetUserAsync(User);
 
@@ -309,7 +310,8 @@
 
         [Authorize]
         [ActionName("View")]
-        public async Task<IActionResult> ViewProfile(string userId, int pageNumber = 1)
+        [RouteParameterConstraint("UserId")]
+        public async Task<IActionResult> ViewProfile(string userId, int pageNumber)
         {
             string currentUserId = User.FindId();
 
