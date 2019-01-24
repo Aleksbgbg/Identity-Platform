@@ -104,12 +104,7 @@
         </div>
 
         <div class="mx-3">
-            @foreach (Comment comment in Model.Comments
-                                             .Where(comment => comment.OwnerId == Model.User.Id)
-                                             .AsEnumerable() // No Reverse implementation for IQueryable from db provider
-                                             .Reverse()
-                                             .Skip(Model.CommentsPagingInfo.ItemsPerPage * (Model.CommentsPagingInfo.CurrentPage - 1))
-                                             .Take(Model.CommentsPagingInfo.ItemsPerPage))
+            @foreach (Comment comment in Model.Comments)
             {
                 bool isAuthenticatedUser = ViewBag.AuthenticatedUserId == comment.AuthorId;
 

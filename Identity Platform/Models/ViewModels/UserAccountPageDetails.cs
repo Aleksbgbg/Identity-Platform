@@ -9,17 +9,24 @@
 
         public UserAccountPageDetails(AppUser user, IEnumerable<string> roles, IQueryable<Comment> comments, int currentCommentsPage)
         {
+            IQueryable<Comment> userComments = comments.Where(comment => comment.OwnerId == user.Id);
+
             User = user;
             Roles = roles;
-            Comments = comments;
-            CommentsPagingInfo = new PagingInfo(currentCommentsPage, comments.Count(comment => comment.OwnerId == user.Id), CommentsPerPage);
+            CommentsPagingInfo = new PagingInfo(currentCommentsPage, userComments.Count(), CommentsPerPage);
+
+            Comments = userComments.AsEnumerable() // No Reverse implementation for IQueryable from db provider
+                                   .Reverse()
+                                   .Skip(CommentsPagingInfo.ItemsPerPage * (CommentsPagingInfo.CurrentPage - 1))
+                                   .Take(CommentsPagingInfo.ItemsPerPage)
+                                   .ToArray();
         }
 
         public AppUser User { get; }
 
         public IEnumerable<string> Roles { get; }
 
-        public IQueryable<Comment> Comments { get; }
+        public Comment[] Comments { get; }
 
         public PagingInfo CommentsPagingInfo { get; }
     }
