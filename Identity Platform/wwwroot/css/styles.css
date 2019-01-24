@@ -17,3 +17,8 @@ button.btn-delete-comment {
 div.comment-delete-gutter {
     width: 33.25px;
 }
+
+img.large-profile-picture {
+    max-width: 250px;
+    max-height: 250px;
+}
